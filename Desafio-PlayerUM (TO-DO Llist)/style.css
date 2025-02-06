@@ -1,0 +1,430 @@
+@import url('https://fonts.googleapis.com/css2?family=Knewave&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --main-color: #443df8;
+    --secondary-color: #614ddd;
+    --bg-color: #FFFFFF;
+    --text-color: #443df8;
+    --input-color:#e1e1e1;
+    --placeholder-color: #b6b6b6;
+    --outline-color: #7664b6;
+    --fill-svg-color: #f1ebff;
+    --modal--color: #f0f0f0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    color: var(--main-color);
+    background-color: var(--bg-color);
+}
+
+body.darkmode {
+    --main-color: #957bfd;
+    --secondary-color: #7f66fb;
+    --bg-color: #121212;
+    --text-color: #957bfd;
+    --input-color:#3f3f3f;
+    --placeholder-color: #8b8b8b;
+    --outline-color: #1b1726;
+    --fill-svg-color: #f1ebff;
+    --modal--color: #282828;
+}
+
+.header {
+    padding: 1rem;
+    font-size: 24px;
+}
+
+#theme-switch {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    background-color: var(--secondary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#theme-switch svg {
+    fill: var(--fill-svg-color);
+    background: none;
+    width: 48px;
+    height: 48px;
+}
+
+#theme-switch svg:last-child {
+    display: none;
+}
+
+.darkmode #theme-switch svg:first-child {
+    display: none;
+}
+
+.darkmode #theme-switch svg:last-child {
+    display: block;
+}
+
+.container {
+    width: 60%;
+    height: 100%;
+    align-content: center;
+}
+
+.task-input {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+#task {
+    width: 100%;
+    border: none;
+    border-radius: 15px;
+    font-size: 20px;
+    padding: 20px;
+    background-color: var(--input-color);
+}
+
+#task::placeholder {
+    font-size: 20px;
+    color: var(--placeholder-color);
+}
+
+#task:focus {
+    outline-color: var(--outline-color);
+}
+
+.buttonAdd {
+    border: none;
+    background: none;
+    align-content: center;
+}
+
+.buttonAdd svg {
+    fill: var(--fill-svg-color);
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+}
+
+.todo-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    background-color: var(--modal--color);
+    border-radius: 15px;
+    filter: drop-shadow(-8px 9px 15px #71717A);
+}
+
+.todo-block h2 {
+    font-size: 42px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.task-list {
+    width: 100%;
+}
+
+.task{
+    display: flex;
+    gap: 20px;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.task-added {
+    display: block;
+    fill: var(--secondary-color);
+    width: 48px;
+    height: 48px;
+    padding-right: 10px;
+    opacity: 1;
+}
+
+.task-done {
+    display: none;
+}
+
+.task-added .task-done {
+    transition: opacity 0.3s ease-in-out;
+}
+
+@starting-style {
+    .task-added {
+        display: block;
+        opacity: 1;
+    }
+    .task-done {
+        display: none;
+        opacity: 0;
+    }
+}
+
+.task.completed {
+    text-decoration: line-through;
+    color: var(--placeholder-color);
+}
+
+.task.completed .task-added {
+    display: none;
+    opacity: 0;
+}
+
+.task.completed .task-done {
+    display: block;
+    fill: var(--secondary-color);
+    width: 48px;
+    height: 48px;
+    padding-right: 10px;
+    opacity: 1;
+}
+
+.task span {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: 28px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.actions .edit, .actions .delete {
+    padding: 10px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+}
+
+.actions .edit svg, 
+.actions .delete svg {
+    fill: var(--fill-svg-color);
+    width: 36px;
+    height: 36px;
+}
+
+.modal {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    align-content: center;
+    justify-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.3s, opacity 0.3s;
+    cursor: auto;
+}
+
+@starting-style {
+    .modal {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+}
+
+.modal-content{
+    width: 50%;
+    padding: 1rem;
+    border-radius: 15px;
+    background-color: var(--input-color);
+    justify-items: center;
+    position: relative;
+}
+
+.modal-content h3 {
+    padding: 20px;
+    font-size: 36px;
+}
+
+.close {
+    position: absolute;
+    left: 20px;
+    cursor: pointer;
+    padding-bottom: 10px;
+}
+
+.close svg {
+    fill: var(--fill-svg-color);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+}
+
+.edit-input {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+#editTaskInput {
+    font-size: 24px;
+    text-align: start;
+    width: 100%;
+    padding: 20px;
+    border: none;
+    border-radius: 15px;
+    word-wrap: break-word; /* Quebra palavras longas */
+    overflow-wrap: break-word; /* Quebra palavras longas (alternativa) */
+    hyphens: auto;
+    white-space: normal; /* Garante quebra de linha */
+    word-break: break-all;
+}
+
+#editTaskInput:focus {
+    outline-color: var(--outline-color);
+}
+
+.save {
+    border: none;
+    background: none;
+    border-radius: 50%;
+    justify-content: center;
+}
+
+.save svg {
+    fill: var(--fill-svg-color);
+    padding: 5px;
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+}
+
+@media (max-width: 992px) {
+    .container {
+        width: 85%;
+    }
+
+    .todo-block {
+        padding: 40px;
+    }
+
+    .todo-block h2 {
+        font-size: 36px;
+    }
+
+    .task span {
+        font-size: 20px;
+    }
+
+    #task {
+        font-size: 16px;
+        padding: 18px;
+    }
+
+    .buttonAdd svg, 
+    .actions .edit svg, 
+    .actions .delete svg {
+        width: 36px;
+        height: 36px;
+    }
+
+    .modal-content {
+        width: 70%;
+    }
+
+    .close {
+        right: 120px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+
+    .todo-block {
+        padding: 30px;
+    }
+
+    .todo-block h2 {
+        font-size: 32px;
+    }
+
+    .task span {
+        font-size: 18px;
+    }
+
+    #task {
+        font-size: 14px;
+        padding: 15px;
+    }
+
+    .buttonAdd svg, 
+    .actions .edit svg, 
+    .actions .delete svg {
+        width: 32px;
+        height: 32px;
+    }
+
+    .modal-content {
+        width: 80%;
+    }
+
+    .close {
+        right: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .todo-block {
+        width: 100%;
+        padding: 20px;
+        border-radius: 0;
+    }
+
+    .todo-block h2 {
+        font-size: 24px;
+    }
+
+    .task span {
+        font-size: 16px;
+    }
+
+    #task {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .buttonAdd svg, 
+    .actions .edit svg, 
+    .actions .delete svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+
+    .close {
+        right: 80px;
+    }
+}
+
