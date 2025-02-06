@@ -8,6 +8,7 @@
     --input-color:#e1e1e1;
     --placeholder-color: #b6b6b6;
     --outline-color: #7664b6;
+    --hover-color: #715cc3;
     --fill-svg-color: #f1ebff;
     --modal--color: #f0f0f0;
 }
@@ -36,8 +37,10 @@ body.darkmode {
     --input-color:#3f3f3f;
     --placeholder-color: #8b8b8b;
     --outline-color: #1b1726;
+    --hover-color: #6a55d0;
     --fill-svg-color: #f1ebff;
     --modal--color: #282828;
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
 }
 
 .header {
@@ -46,7 +49,7 @@ body.darkmode {
 }
 
 #theme-switch {
-    position: fixed;
+    position: absolute;
     top: 20px;
     right: 20px;
     border: none;
@@ -59,25 +62,40 @@ body.darkmode {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    overflow: hidden;
+}
+
+#theme-switch:hover {
+    background-color: var(--hover-color);
 }
 
 #theme-switch svg {
-    fill: var(--fill-svg-color);
-    background: none;
-    width: 48px;
-    height: 48px;
+    position: absolute;
+    transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
-#theme-switch svg:last-child {
-    display: none;
+/* Ícone do sol (modo claro) */
+.dark-icon {
+    opacity: 1;
+    transform: rotate(0deg);
 }
 
-.darkmode #theme-switch svg:first-child {
-    display: none;
+/* Ícone da lua (modo escuro) */
+.light-icon {
+    opacity: 0;
+    transform: rotate(-180deg);
 }
 
-.darkmode #theme-switch svg:last-child {
-    display: block;
+/* Quando o modo escuro estiver ativado */
+body.darkmode .dark-icon {
+    opacity: 0;
+    transform: rotate(180deg);
+}
+
+body.darkmode .light-icon {
+    opacity: 1;
+    transform: rotate(0deg);
 }
 
 .container {
@@ -100,6 +118,7 @@ body.darkmode {
     border-radius: 15px;
     font-size: 20px;
     padding: 20px;
+    color: var(--fill-svg-color);
     background-color: var(--input-color);
 }
 
@@ -116,6 +135,10 @@ body.darkmode {
     border: none;
     background: none;
     align-content: center;
+}
+
+.buttonAdd svg:hover {
+    background-color: var(--hover-color);
 }
 
 .buttonAdd svg {
@@ -227,24 +250,29 @@ body.darkmode {
     height: 36px;
 }
 
+.actions .edit:hover, 
+.actions .delete:hover {
+    background-color: var(--hover-color);
+}
+
 .modal {
     display: none;
+    position: fixed;
     width: 100%;
     height: 100%;
-    position: fixed;
-    align-content: center;
-    justify-items: center;
+    align-items: center;
+    justify-content: center;
     background: rgba(0, 0, 0, 0.5);
-    transform: translateY(0);
     opacity: 1;
-    transition: transform 0.3s, opacity 0.3s;
-    cursor: auto;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 @starting-style {
     .modal {
         transform: translateY(20px);
         opacity: 0;
+        pointer-events: none;
     }
 }
 
@@ -275,6 +303,10 @@ body.darkmode {
     height: 36px;
     border-radius: 50%;
     background-color: var(--secondary-color);
+}
+
+.close svg:hover {
+    background-color: var(--hover-color);
 }
 
 .edit-input {
@@ -313,6 +345,10 @@ body.darkmode {
     padding: 5px;
     border-radius: 50%;
     background-color: var(--secondary-color);
+}
+
+.save svg:hover {
+    background-color: var(--hover-color);
 }
 
 @media (max-width: 992px) {

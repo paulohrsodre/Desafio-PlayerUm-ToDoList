@@ -24,7 +24,9 @@ function createTaskElement(text) {
         <span onclick="toggleComplete(this)">
             <svg class="task-added" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#e8eaed"><path d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Z"/></svg>
             <svg class="task-done" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#e8eaed"><path d="m419-407-98-98q-9-9-21-9t-21 9q-9 9-9 21.5t9 21.5l119 120q9 9 21 9t21-9l247-248q9-9 9-21t-9-21q-9-9-21.5-9t-21.5 9L419-407ZM180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Z"/></svg>
-            ${text}
+            <span class="task-text">
+                ${text}
+            </span>
         </span>
         <div class="actions">
             <button class="edit" onclick="openModal(this)">
@@ -44,20 +46,26 @@ function removeTask(button) {
 
 function openModal(button) {
     const li = button.parentElement.parentElement;
-    const span = li.querySelector("span");
+    const span = li.querySelector(".task-text");
 
     let taskText = span.textContent;
 
-    taskText = taskText.trim();
-    taskText = taskText.replace(/\s+/g, ' ');
+    taskText = taskText.trim().replace(/\s+/g, ' ');
 
     document.getElementById("editTaskInput").value = taskText;
     currentTaskElement = span;
-    document.getElementById("editModal").style.display = "block";
+    const modal = document.getElementById("editModal");
+    modal.style.display = "flex"; // Garante que o modal aparece antes da animação
+    setTimeout(() =>  modal.classList.remove("hidden"), 10);
 }
 
 function closeModal() {
-    document.getElementById("editModal").style.display = "none";
+    const modal = document.getElementById("editModal");
+    modal.classList.add("hidden");
+
+    setTimeout(() => {
+        modal.style.display = "none"; // Só esconde após a animação
+    }, 300);
 }
 
 function saveEdit() {
@@ -66,6 +74,7 @@ function saveEdit() {
         currentTaskElement.textContent = newText;
         saveTasks();
     }
+    closeModal();
 }
 
 function toggleComplete(span) {
